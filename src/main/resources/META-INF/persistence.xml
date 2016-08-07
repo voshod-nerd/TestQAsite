@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.mycompany_VacationPlanner_war_1.0.0PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.infiniteskills.mvc.entity.Employee</class>
+    <class>com.infiniteskills.mvc.entity.Sotrudnik</class>
+    <class>com.infiniteskills.mvc.entity.Stoimostnomera</class>
+    <class>com.infiniteskills.mvc.entity.Uslug</class>
+    <class>com.infiniteskills.mvc.entity.Client</class>
+    <class>com.infiniteskills.mvc.entity.Bron</class>
+    <class>com.infiniteskills.mvc.entity.Progivanie</class>
+    <class>com.infiniteskills.mvc.entity.Zayvka</class>
+    <class>com.infiniteskills.mvc.entity.Tarifz</class>
+    <class>com.infiniteskills.mvc.entity.Program</class>
+    <class>com.infiniteskills.mvc.entity.Stimostpitan</class>
+    <class>com.infiniteskills.mvc.entity.Typeza</class>
+    <class>com.infiniteskills.mvc.entity.Organization</class>
+    <class>com.infiniteskills.mvc.entity.Pitanie</class>
+    <class>com.infiniteskills.mvc.entity.Reestruslug</class>
+    <class>com.infiniteskills.mvc.entity.Grafik</class>
+    <class>com.infiniteskills.mvc.entity.Hotel</class>
+    <class>com.infiniteskills.mvc.entity.Stoimostuslug</class>
+    <class>com.infiniteskills.mvc.entity.Viza</class>
+    <class>com.infiniteskills.mvc.entity.Otpusk</class>
+    <class>com.infiniteskills.mvc.entity.Nomerhotel</class>
+    <class>com.infiniteskills.mvc.entity.Typenomerhotel</class>
+    <class>com.infiniteskills.mvc.entity.Dolgnost</class>
+    <class>com.infiniteskills.mvc.entity.Typeusers</class>
+    <class>com.infiniteskills.mvc.entity.Answers</class>
+    <class>com.infiniteskills.mvc.entity.Questions</class>
+    <class>com.infiniteskills.mvc.entity.Category</class>
+    <class>com.infiniteskills.mvc.entity.Users</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/spring?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>
