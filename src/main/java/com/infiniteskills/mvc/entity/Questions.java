@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
     @NamedQuery(name = "Questions.findById", query = "SELECT q FROM Questions q WHERE q.id = :id"),
     @NamedQuery(name = "Questions.findByName", query = "SELECT q FROM Questions q WHERE q.name = :name"),
-    @NamedQuery(name = "Questions.findByFullltext", query = "SELECT q FROM Questions q WHERE q.fullltext = :fullltext"),
+    @NamedQuery(name = "Questions.findByFulltext", query = "SELECT q FROM Questions q WHERE q.fulltext = :fulltext"),
     @NamedQuery(name = "Questions.findByDateadd", query = "SELECT q FROM Questions q WHERE q.dateadd = :dateadd")})
 public class Questions implements Serializable {
 
@@ -48,8 +48,8 @@ public class Questions implements Serializable {
     private Integer id;
     @Column(name = "NAME")
     private String name;
-    @Column(name = "FULLLTEXT")
-    private String fullltext;
+    @Column(name = "FULLTEXT")
+    private String fulltext;
     @Column(name = "DATEADD")
     @Temporal(TemporalType.DATE)
     private Date dateadd;
@@ -85,12 +85,12 @@ public class Questions implements Serializable {
         this.name = name;
     }
 
-    public String getFullltext() {
-        return fullltext;
+    public String getFulltext() {
+        return fulltext;
     }
 
-    public void setFullltext(String fullltext) {
-        this.fullltext = fullltext;
+    public void setFulltext(String fulltext) {
+        this.fulltext = fulltext;
     }
 
     public Date getDateadd() {

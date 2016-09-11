@@ -1,68 +1,169 @@
-CREATE TABLE ROOT.ANSWERS (
-ID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-IDQUESTION INT,
-IDUSER INT, 
-TEXT VARCHAR(5000),
-DATEADD DATE,
-PRIMARY KEY (ID)
-);
+-- phpMyAdmin SQL Dump
+-- version 4.0.10.6
+-- http://www.phpmyadmin.net
+--
+-- Хост: 127.0.0.1:3306
+-- Время создания: Сен 12 2016 г., 00:10
+-- Версия сервера: 5.5.41-log
+-- Версия PHP: 5.5.19
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
-CREATE TABLE ROOT.CATEGORY (
-ID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-NAME VARCHAR(250),
-PRIMARY KEY (ID)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
-CREATE TABLE ROOT.QUESTIONS (
-ID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-NAME VARCHAR(250),
-IDCATEGORY INT,
-IDUSER INT, 
-FULLLTEXT VARCHAR(5000),
-DATEADD DATE,
-PRIMARY KEY (ID)
-);
+--
+-- База данных: `testdb`
+--
 
-CREATE TABLE ROOT.TYPEUSERS (
-ID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-NAME VARCHAR(250),
-PRIMARY KEY (ID)
-);
+-- --------------------------------------------------------
 
+--
+-- Структура таблицы `ANSWERS`
+--
 
+CREATE TABLE IF NOT EXISTS `ANSWERS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDQUESTION` int(11) DEFAULT NULL,
+  `IDUSER` int(11) DEFAULT NULL,
+  `TEXT` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `DATEADD` date DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `IDQUESTION` (`IDQUESTION`),
+  KEY `IDUSER` (`IDUSER`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
+--
+-- Дамп данных таблицы `ANSWERS`
+--
 
-CREATE TABLE ROOT.USERS (
-ID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-USERNAME VARCHAR(250),
-IDTYPEUSER INT,
-EMAIL VARCHAR(250),
-PICTURE VARCHAR(500),
-PASSWORD VARCHAR(500),
-PRIMARY KEY (ID)
-);
+INSERT INTO `ANSWERS` (`ID`, `IDQUESTION`, `IDUSER`, `TEXT`, `DATEADD`) VALUES
+(1, 1, 1, 'Да никогда уж.. Заткнись ты ту тупой кусок говна ', '2016-09-22'),
+(2, 1, 1, 'Ð ÑÑ ÑÐ°Ð¼ Ð½Ðµ ÑÑÐ¿Ð¾Ð¹ ÐºÑÑÐ¾Ðº Ð³Ð¾Ð²Ð½Ð°? ÐÐ¾Ð²Ð½ÑÐº ÑÑÐ°Ð½ÑÐ¹', '2016-09-12'),
+(3, 1, 1, 'Ð¢ÑÐ¿Ð¾ ÐºÑÑÐ¾Ðº Ð³Ð¾Ð²Ð½Ð°', '2016-09-12'),
+(4, 1, 1, 'Ð¢Ð£Ð¿Ð¾Ð¹ ÐºÑÑÐ¾ Ð³Ð¾Ð²Ð½ nu ti ponyal', '2016-09-12');
 
-ALTER TABLE ROOT.ANSWERS
-ADD FOREIGN KEY (IDQUESTION) 
-REFERENCES  ROOT.QUESTIONS(ID);
+-- --------------------------------------------------------
 
-ALTER TABLE ROOT.ANSWERS
-ADD FOREIGN KEY (IDUSER) 
-REFERENCES  ROOT.USERS(ID);
+--
+-- Структура таблицы `CATEGORY`
+--
 
-ALTER TABLE ROOT.QUESTIONS
-ADD FOREIGN KEY (IDCATEGORY) 
-REFERENCES  ROOT.CATEGORY(ID);
+CREATE TABLE IF NOT EXISTS `CATEGORY` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
-ALTER TABLE ROOT.QUESTIONS
-ADD FOREIGN KEY (IDUSER) 
-REFERENCES  ROOT.USERS(ID);
+--
+-- Дамп данных таблицы `CATEGORY`
+--
 
-ALTER TABLE ROOT.USERS
-ADD FOREIGN KEY (IDTYPEUSER) 
-REFERENCES  ROOT.TYPEUSERS(ID);
+INSERT INTO `CATEGORY` (`ID`, `NAME`) VALUES
+(1, 'electornics'),
+(2, 'clothers'),
+(3, 'food'),
+(4, 'sport');
 
+-- --------------------------------------------------------
 
+--
+-- Структура таблицы `QUESTIONS`
+--
 
+CREATE TABLE IF NOT EXISTS `QUESTIONS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `IDCATEGORY` int(11) DEFAULT NULL,
+  `IDUSER` int(11) DEFAULT NULL,
+  `FULLTEXT` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `DATEADD` date DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `IDCATEGORY` (`IDCATEGORY`),
+  KEY `IDUSER` (`IDUSER`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
+--
+-- Дамп данных таблицы `QUESTIONS`
+--
+
+INSERT INTO `QUESTIONS` (`ID`, `NAME`, `IDCATEGORY`, `IDUSER`, `FULLTEXT`, `DATEADD`) VALUES
+(1, 'Когда мы снова увидим море?', 1, 1, 'rwewertwertwe', '2016-09-14'),
+(2, 'Доколе басурманы будут топтать землю русскую?', 2, 1, 'fasdsqfdafasd', '2016-09-14'),
+(3, '454354', 1, 1, '345435', '2016-09-11'),
+(4, '543534', 1, 1, '34543534', '2016-09-11');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `TYPEUSERS`
+--
+
+CREATE TABLE IF NOT EXISTS `TYPEUSERS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `TYPEUSERS`
+--
+
+INSERT INTO `TYPEUSERS` (`ID`, `NAME`) VALUES
+(1, 'ROLE_USER');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `USERS`
+--
+
+CREATE TABLE IF NOT EXISTS `USERS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USERNAME` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `IDTYPEUSER` int(11) DEFAULT NULL,
+  `EMAIL` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `PICTURE` varchar(500) COLLATE utf8_bin DEFAULT NULL,
+  `PASSWORD` varchar(500) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `IDTYPEUSER` (`IDTYPEUSER`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `USERS`
+--
+
+INSERT INTO `USERS` (`ID`, `USERNAME`, `IDTYPEUSER`, `EMAIL`, `PICTURE`, `PASSWORD`) VALUES
+(1, 'olg', 1, 'voshod-nerd@hotmail.com', NULL, '$2a$10$h3OANmGEvynTVh.bwy4Kh.vuU9A88v1V95c7woXaEZ7Dtw.BeDBhK');
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `ANSWERS`
+--
+ALTER TABLE `ANSWERS`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`IDQUESTION`) REFERENCES `QUESTIONS` (`ID`),
+  ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`IDUSER`) REFERENCES `USERS` (`ID`);
+
+--
+-- Ограничения внешнего ключа таблицы `QUESTIONS`
+--
+ALTER TABLE `QUESTIONS`
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`IDCATEGORY`) REFERENCES `CATEGORY` (`ID`),
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`IDUSER`) REFERENCES `USERS` (`ID`);
+
+--
+-- Ограничения внешнего ключа таблицы `USERS`
+--
+ALTER TABLE `USERS`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`IDTYPEUSER`) REFERENCES `TYPEUSERS` (`ID`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -79,7 +79,7 @@ public class IndexController {
         return "index";
     }
     
-      @RequestMapping(path = "/indexcategory", method = RequestMethod.GET)
+      @RequestMapping(path = "/indexcat", method = RequestMethod.GET)
     public String goIndexCategory(@RequestParam("category") Integer category,ModelMap model) {
         
         List<Category> allCategories = categoryDAO.findAll();
@@ -89,11 +89,8 @@ public class IndexController {
         return "index";
     }
     
-    
-    
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String logUser() {
+    public String goLoginUser() {
         return "login";
     }
 
@@ -121,12 +118,12 @@ public class IndexController {
         return "addquestion";
     }
 
-    @RequestMapping(value = "/postquestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/postquestion", method = RequestMethod.POST)
     public String postQuestion(@RequestParam("name") String name, @RequestParam("fulltext") String fulltext, @RequestParam("category") int category) {
 
         Questions question = new Questions();
         question.setDateadd(new Date());
-        question.setFullltext(fulltext);
+        question.setFulltext(fulltext);
         question.setName(name);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -148,7 +145,7 @@ public class IndexController {
     }
 
     
-    @RequestMapping(value = "/postanswer", method = RequestMethod.GET)
+    @RequestMapping(value = "/postanswer", method = RequestMethod.POST)
     public String postAnswer(@RequestParam("question") Integer idQuestion, @RequestParam("textanswer") String text) {
 
         Answers answer = new Answers();
@@ -165,11 +162,7 @@ public class IndexController {
     }
     
     
-    
-    
-    
-    
-    @RequestMapping(value = "/viewprofil", method = RequestMethod.GET)
+    @RequestMapping(value = "/viewprofil", method = RequestMethod.POST)
     public String viewProfil(ModelMap model) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -190,11 +183,9 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String regsuc(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) throws UnsupportedEncodingException {
+    public String goRegistrationSucces(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) throws UnsupportedEncodingException {
 
-        //String p = new String(fio.getBytes("ISO8859-1"), "UTF-8");
-        //String orgname = new String(org.getBytes("ISO8859-1"), "UTF-8");
-        //String usr = new String(log.getBytes("ISO8859-1"), "UTF-8");
+       
         Users user = new Users();
 
         user.setUsername(username);

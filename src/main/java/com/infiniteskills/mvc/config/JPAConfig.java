@@ -31,11 +31,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @EnableTransactionManagement
 public class JPAConfig {
 
-    private static final String DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    private static final String URL = "jdbc:derby://localhost:1527/TESTDB";
-    private static final String USERNAME = "ROOT";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/testdb";
+    private static final String USERNAME = "yii2";
     private static final String PASSWORD = "19800123";
-    private static final String DIALECT = "org.hibernate.dialect.DerbyDialect";
+    private static final String DIALECT = "org.hibernate.dialect.MySQLDialect";
     private static final String STRATEGY = "none";
 
     @Bean
