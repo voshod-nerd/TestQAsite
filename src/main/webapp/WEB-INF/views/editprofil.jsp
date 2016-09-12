@@ -1,9 +1,4 @@
-<%-- 
-    Document   : editprofil
-    Created on : 09.09.2016, 21:59:36
-    Author     : Олег
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
@@ -22,63 +17,62 @@
         <script src="resources/js/bootstrap.min.js"></script>
 
 
-
     </head>
-    <body>
 
+    <body>
         <div class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="/vc" class="navbar-brand">Главная</a>
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                    <a href="/vc" class="navbar-brand">Main</a>
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="viewprofil" class="navbar-brand">Profil</a>
+                        <a href="addquestion" class="navbar-brand">Add Question</a>
+                    </sec:authorize>
+
                 </div>
                 <div class="navbar-collapse collapse" id="navbar-main">
-                    <sec:authorize access="hasRole('ROLE_USER')">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Главная<span class="caret"></span></a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Профиль<span class="caret"></span></a>
-                            </li>
-                        </ul>
-                    </sec:authorize>  
+
 
                     <ul class="nav navbar-nav navbar-right">
-
-                        <li><a href="contact" >Контакты</a></li>
-                        <sec:authorize access="ROLE_ANONYMOUS">
-                            <td><a href="login">Login</a></td>
-                        </sec:authorize>
-                        <sec:authorize access="isAuthenticated()">
-                            <a href="logout">Выйти</a>
-                        </sec:authorize>
+                        <sec:authorize access="isAnonymous()">
+                            <li><a href="login">Log In</a></li>
+                            </sec:authorize>  
+                        <li> 
+                            <sec:authorize access="isAuthenticated()">
+                                <a href="logout">Log Out</a>
+                            </sec:authorize>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+
+
         <br>
-
-
-        <div class="container" style="background-color:#ADD8E6;" >
-            <br>
-            <h3 class="text-center">Simple QA site</h3>
+        <br>
+        <br>
+        <div class="container" style="background-color:#ADD8E6; border-radius: 15px;" >
+            <h4>Profil User</h4>
+            <form role="form" method="post" enctype="multipart/form-data"  action="saveprofil" >
+            <p>
+                <label>Add photo</label>
+                <input class="form-control"  type="file"  name="file" />
+            </p>
             
-
-           
-
-
-           
-
+            <label>Username</label>
+            <input type="hidden" value="${user.id}" name="id" />
+            <input class="form-control" value="${user.username}" name="username"  />
+            <input class="form-control" value="${user.email}" name="email" />
+            <input type="submit" value="Save" />
+            </form>
 
         </div>
 
-        
 
-        <!-- Низ страницы -->
-        <div class="navbar navbar-default navbar-bottom"></div>
+
     </body>
+
+
+
+
 </html>

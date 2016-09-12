@@ -162,7 +162,7 @@ public class IndexController {
     }
     
     
-    @RequestMapping(value = "/viewprofil", method = RequestMethod.POST)
+    @RequestMapping(value = "/viewprofil", method = RequestMethod.GET)
     public String viewProfil(ModelMap model) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

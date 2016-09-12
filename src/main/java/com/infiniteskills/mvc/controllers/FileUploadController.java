@@ -30,22 +30,19 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileUploadController {
 
-
     private static final Logger logger = LoggerFactory
             .getLogger(FileUploadController.class);
-    
-    
+
     private UsersRepository usersDAO;
-    
-     @Autowired
+
+    @Autowired
     private HttpServletRequest request;
 
     @Autowired(required = false)
     public void setUsersRepository(UsersRepository userDAO) {
         this.usersDAO = userDAO;
     }
-    
-    
+
     /**
      * Upload single file using Spring Controller
      *
@@ -56,8 +53,7 @@ public class FileUploadController {
      * @return
      */
     @RequestMapping(value = "/saveprofil", method = RequestMethod.POST)
-    public 
-    String uploadFileHandler(@RequestParam("username") String name, @RequestParam("email") String email, @RequestParam("id") Integer id,
+    public String uploadFileHandler(@RequestParam("username") String name, @RequestParam("email") String email, @RequestParam("id") Integer id,
             @RequestParam("file") MultipartFile file) {
 
         if (!file.isEmpty()) {
@@ -66,9 +62,9 @@ public class FileUploadController {
 
                 // Creating the directory to store file
                 //String rootPath = System.getProperty("catalina.home");
-                 String uploadsDir = "/resources/images/";
-                    String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
-                
+                String uploadsDir = "/resources/images/";
+                String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+
                 File dir = new File(realPathtoUploads + File.separator + "tmpFiles");
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -91,9 +87,8 @@ public class FileUploadController {
                 Users user = usersDAO.findUserByLogin(username);
                 user.setEmail(email);
                 user.setUsername(name);
-                user.setPicture("resources/images/tmpFiles/"+name+".jpg");
+                user.setPicture("resources/images/tmpFiles/" + name + ".jpg");
                 usersDAO.update(user);
-                
 
                 return "redirect:viewprofil";
             } catch (Exception e) {
