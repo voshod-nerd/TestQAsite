@@ -10,9 +10,11 @@ import com.infiniteskills.mvc.repository.CategoryRepository;
 import com.infiniteskills.mvc.repository.QuestionRepository;
 import com.infiniteskills.mvc.repository.TypeUsersRepository;
 import com.infiniteskills.mvc.repository.UsersRepository;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
+
 import java.util.List;
+import javax.validation.Valid;
+import org.apache.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,9 +28,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Main controller of program,which process request from clients page
+ *
+ * @author Олег Соколов
+*
+ */
 @Controller
 public class IndexController {
 
+    private static final Logger log = Logger.getLogger(IndexController.class.getName());
     private UsersRepository usersDAO;
     private TypeUsersRepository typeUserDAO;
     private CategoryRepository categoryDAO;
@@ -62,7 +71,7 @@ public class IndexController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String goEnter(ModelMap model) {
-
+        log.info("Это информационное сообщение!");
         List<Category> allCategories = categoryDAO.findAll();
         List<Questions> allQuestion = questionDAO.findAll();
         model.addAttribute("listCategories", allCategories);
@@ -70,6 +79,10 @@ public class IndexController {
         return "index";
     }
 
+    /*
+    * Method return name  main jsp page of site
+    @return name of jsp page  
+     */
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String goIndex(ModelMap model) {
         List<Category> allCategories = categoryDAO.findAll();
@@ -78,36 +91,62 @@ public class IndexController {
         model.addAttribute("listQuestions", allQuestion);
         return "index";
     }
-    
-      @RequestMapping(path = "/indexcat", method = RequestMethod.GET)
-    public String goIndexCategory(@RequestParam("category") Integer category,ModelMap model) {
-        
+
+    /*
+    * Method return name  main jsp with certains category goods page
+    @param Int category of foods
+    @param ModelMap
+    @return name of jsp page  
+     */
+    @RequestMapping(path = "/indexcat", method = RequestMethod.GET)
+    public String goIndexCategory(@RequestParam("category") Integer category, ModelMap model) {
+
         List<Category> allCategories = categoryDAO.findAll();
         List<Questions> allQuestion = questionDAO.getQuestionsByCategory(category);
         model.addAttribute("listCategories", allCategories);
         model.addAttribute("listQuestions", allQuestion);
         return "index";
     }
+
     
+     /*
+    * Method return name  login page
+    @return name of jsp page  
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String goLoginUser() {
         return "login";
     }
 
+    
+     /*
+    * Method return name   jsp page to add answer to certain question
+    @param Id of question
+    @param ModelMap
+    @return name of jsp page  
+     */
     @RequestMapping(value = "/addanswer", method = RequestMethod.GET)
     public String addAnswer(@RequestParam("id") Integer id, ModelMap model) {
 
         Questions question = questionDAO.getById(id);
         List<Answers> listAnswers = answerDAO.getByQuestion(question);
-        
-        for(Answers x:listAnswers) System.out.println(x.getText());
-        
+
+        for (Answers x : listAnswers) {
+            System.out.println(x.getText());
+        }
+
         model.addAttribute("listAnswers", listAnswers);
         model.addAttribute("question", question);
 
         return "addanswer";
     }
 
+    
+     /*
+    * Method return name jsp page to adding question
+    @param ModelMap
+    @return name of jsp page  
+     */
     @RequestMapping(value = "/addquestion", method = RequestMethod.GET)
     public String addQuestion(ModelMap model) {
 
@@ -117,7 +156,14 @@ public class IndexController {
 
         return "addquestion";
     }
-
+    
+     /*
+    * Method gets question from client and save it  
+    @param name of question
+    @param fulltext of question
+    @param category of foods
+     
+     */
     @RequestMapping(value = "/postquestion", method = RequestMethod.POST)
     public String postQuestion(@RequestParam("name") String name, @RequestParam("fulltext") String fulltext, @RequestParam("category") int category) {
 
@@ -144,7 +190,10 @@ public class IndexController {
         return "redirect:index";
     }
 
-    
+    /* Method gets answer from client and save it  
+    *  @param id question
+    *  @param textanswer - full text answer
+     */
     @RequestMapping(value = "/postanswer", method = RequestMethod.POST)
     public String postAnswer(@RequestParam("question") Integer idQuestion, @RequestParam("textanswer") String text) {
 
@@ -158,42 +207,47 @@ public class IndexController {
         Questions question = questionDAO.getById(idQuestion);
         answer.setIdquestion(question);
         answerDAO.create(answer);
-        return "redirect:addanswer?id="+question.getId().toString();
+        return "redirect:addanswer?id=" + question.getId().toString();
     }
     
-    
+    /* Method return name   jsp page to view profil user 
+    @param ModelMap
+    @return name of jsp page
+    */
     @RequestMapping(value = "/viewprofil", method = RequestMethod.GET)
     public String viewProfil(ModelMap model) {
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Users user = usersDAO.findUserByLogin(username);
-        model.addAttribute("user",user);       
+        model.addAttribute("user", user);
         return "viewprofil";
     }
-
+    
+     /* Method return name   jsp page to edit profil user 
+    @param ModelMap
+    @return name of jsp page
+    */
     @RequestMapping(value = "/editprofil", method = RequestMethod.GET)
     public String editProfil(ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Users user = usersDAO.findUserByLogin(username);
-        model.addAttribute("user",user);
-        
+        model.addAttribute("user", user);
+
         return "editprofil";
     }
-
+    
+     /* Method return name login jsp page and save name,email and password new registered user 
+    @param Users class 
+    @return name of login jsp page
+    */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String goRegistrationSucces(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) throws UnsupportedEncodingException {
-
-       
-        Users user = new Users();
-
-        user.setUsername(username);
-        user.setEmail(email);
+    public String testValidation(@Valid Users user) {
         Typeusers typeUser = typeUserDAO.getTypeUserByName("ROLE_USER");
         user.setIdtypeuser(typeUser);
         BCryptPasswordEncoder n = new BCryptPasswordEncoder();
-        user.setPassword(n.encode(password));
+        user.setPassword(n.encode(user.getPassword()));
         usersDAO.create(user);
         return "login";
     }

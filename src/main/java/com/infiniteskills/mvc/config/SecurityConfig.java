@@ -25,8 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-    
-    
+
     private BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -51,17 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/resources/**", "/vc").permitAll()
-                .antMatchers("/addquestion", "/profil").hasAnyRole("USER")
+                .antMatchers("addquestion", "/viewprofil").hasRole("USER")
                 .and();
 
         http.formLogin()
-                // ????????? ???????? ? ?????? ??????
                 .loginPage("/login")
-                // ????????? action ? ????? ??????
                 .loginProcessingUrl("/j_spring_security_check")
-                // ????????? URL ??? ????????? ??????
-                .failureUrl("/enter?error")
-                // ????????? ????????? ?????? ? ?????? ? ????? ??????
+                .failureUrl("/login?error")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .defaultSuccessUrl("/index", true)

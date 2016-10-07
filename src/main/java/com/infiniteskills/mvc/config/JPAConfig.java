@@ -17,8 +17,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -33,8 +31,8 @@ public class JPAConfig {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/testdb";
-    private static final String USERNAME = "yii2";
-    private static final String PASSWORD = "19800123";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
     private static final String DIALECT = "org.hibernate.dialect.MySQLDialect";
     private static final String STRATEGY = "none";
 

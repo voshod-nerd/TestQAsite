@@ -6,7 +6,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 
 <html>
@@ -30,7 +32,13 @@
             <div class="container">
                 <div class="navbar-header">
                     <a href="/vc" class="navbar-brand">Main</a>
-                    <a href="/" class="navbar-brand">Profil</a>
+
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="viewprofil" class="navbar-brand">Profil</a>
+
+                    </sec:authorize>
+
+
                 </div>
                 <div class="navbar-collapse collapse" id="navbar-main">
 
@@ -53,11 +61,11 @@
         <br>
         <br>
         <br>
-        
-         <div class="col-md-6 col-md-offset-2">	
+
+        <div class="col-md-6 col-md-offset-2">	
             <c:if test="${param.error != null}">
                 <div class="alert alert-danger">
-                    Неправильный пароль или логин пользователя
+                    Invalid password or password
                 </div>
             </c:if>
             <c:if test="${param.logout != null}">
@@ -66,32 +74,37 @@
                 </div>
             </c:if>	
         </div>  
-        
-        
+
+
         <div class="container" style="background-color:#ADD8E6; border-radius: 15px;"  >
             <br>
             <div class="row" >
                 <div  class="col-md-6">
                     <h4 class="text-center">Log In</h4>
                     <form method="post" action="j_spring_security_check" modelAttribute="user" class="form-horizontal" >
-                    <label>Username</label>
-                    <input class="form-control" type="text" name="j_username" />
-                    <label>Password</label>
-                    <input class="form-control" type="text" name="j_password" />
-                    <input class="btn btn-default" type="submit" value="Log In"  />
+                        <label>Username</label>
+                        <input class="form-control" type="text" name="j_username" />
+                        <label>Password</label>
+                        <input class="form-control" type="text" name="j_password" />
+                        <input class="btn btn-default" type="submit" value="Log In"  />
                     </form>
                 </div>
                 <div class="col-md-6">
                     <h4 class="text-center">Registration</h4>
                     <form action="registration" method="post">
-                    <label>Username</label>
-                     <input class="form-control" type="text" name="username" />
-                    <label>Email</label>
-                    <input class="form-control" type="email" name="email" />
-                    <label>Password</label>
-                    <input class="form-control" type="text" name="password" />
-                    <input class="btn btn-default" type="submit" value="Registration"  />
+                        <label>Username</label>
+                        <input class="form-control" type="text" name="username" />
+                        <label>Email</label>
+                        <input class="form-control" type="email" name="email" />
+                        <label>Password</label>
+                        <input class="form-control" type="text" name="password" />
+                        <input class="btn btn-default" type="submit" value="Registration"  />
                     </form>
+                 
+                   
+
+
+
                 </div>
 
 
@@ -100,8 +113,4 @@
 
 
     </body>
-
-
-
-
 </html>

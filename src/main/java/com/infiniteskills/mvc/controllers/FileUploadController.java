@@ -30,8 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileUploadController {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(FileUploadController.class);
+     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileUploadController.class.getName());
 
     private UsersRepository usersDAO;
 
@@ -78,7 +77,7 @@ public class FileUploadController {
                     stream.write(bytes);
                 }
 
-                logger.info("Server File Location="
+                log.info("Server File Location="
                         + serverFile.getAbsolutePath());
 
                 // save updated date about users

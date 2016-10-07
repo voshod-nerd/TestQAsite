@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -45,6 +46,7 @@ public class Users implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Column(name = "USERNAME")
+    @NotNull
     private String username;
     @Column(name = "EMAIL")
     private String email;
